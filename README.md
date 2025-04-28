@@ -1,4 +1,4 @@
-# SFHMMY Netcompany workshop
+# SFHMMY Java Spring Boot workshop
 <h4> A simple REST API with Java Spring Boot</h4>
 <hr>
 <h4>What will you need?</h4>
