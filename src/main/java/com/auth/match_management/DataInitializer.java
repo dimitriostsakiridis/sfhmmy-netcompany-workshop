@@ -24,7 +24,23 @@ public class DataInitializer implements CommandLineRunner {
         matchEntity2.setTeamHomeName("TestHome 2");
         matchEntity2.setTeamAwayName("TestAway 2");
 
-        matchService.createMatch(matchEntity1);
-        matchService.createMatch(matchEntity2);
+        MatchEntity matchEntity3 = new MatchEntity();
+        matchEntity3.setTeamHomeName("TestAway 3");
+        matchEntity3.setTeamAwayName("TestHome 3");
+
+        MatchEntity matchEntity4 = new MatchEntity();
+        matchEntity4.setTeamHomeName("TestAway 2");
+        matchEntity4.setTeamAwayName("TestHome 2");
+
+
+        try{
+            matchService.createMatch(matchEntity1);
+            matchService.createMatch(matchEntity2);
+            matchService.createMatch(matchEntity3);
+            matchService.createMatch(matchEntity4);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }

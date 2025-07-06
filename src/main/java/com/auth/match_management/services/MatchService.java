@@ -2,8 +2,13 @@ package com.auth.match_management.services;
 
 import com.auth.match_management.entities.MatchEntity;
 import com.auth.match_management.repositories.MatchRepository;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -15,8 +20,20 @@ public class MatchService {
         this.matchRepository = matchRepository;
     }
 
-    public MatchEntity createMatch(MatchEntity matchEntity) {
+    public MatchEntity createMatch(MatchEntity matchEntity) throws Exception {
+        Date date = Date.valueOf(LocalDate.now());
+        String home = matchEntity.getTeamHomeName();
+        String away = matchEntity.getTeamAwayName();
+
+        //Bidirectional search for matches at the current date
+        boolean exists_h = matchRepository.existsByTeamHomeNameAndTeamAwayNameAndDate(home, away, date);
+        boolean exists_a = matchRepository.existsByTeamHomeNameAndTeamAwayNameAndDate(away, home, date);
+
+        if(exists_h || exists_a) {
+            throw new IllegalArgumentException("Match already exists");
+        }
         return matchRepository.save(matchEntity);
+
     }
 
     public MatchEntity updateMatch(Long id, MatchEntity updatedMatch) {

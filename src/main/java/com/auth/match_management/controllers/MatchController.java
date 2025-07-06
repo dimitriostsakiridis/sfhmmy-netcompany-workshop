@@ -3,6 +3,7 @@ package com.auth.match_management.controllers;
 import com.auth.match_management.entities.MatchEntity;
 import com.auth.match_management.services.MatchService;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,14 @@ public class MatchController {
 
     @PostMapping
     @Transactional
-    public MatchEntity createMatch(@RequestBody MatchEntity matchEntity) {
-        return matchService.createMatch(matchEntity);
+    public ResponseEntity<?> createMatch(@RequestBody MatchEntity matchEntity) {
+        try{
+            matchService.createMatch(matchEntity);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(matchEntity, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
