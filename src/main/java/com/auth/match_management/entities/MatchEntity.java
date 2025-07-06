@@ -27,7 +27,8 @@ public class MatchEntity {
     private int teamAwayGoals;
 
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+    //Date Precision was needed for search and filtering
+    @Temporal(TemporalType.DATE)
     @Column(name = "date", nullable = false, updatable = false)
     private Date date;
 
