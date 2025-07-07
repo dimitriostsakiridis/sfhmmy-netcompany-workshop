@@ -10,4 +10,7 @@ import java.util.List;
 public interface MatchRepository extends JpaRepository<MatchEntity, Long> {
     //Check for match instances between two teams on a specific date
     boolean existsByTeamHomeNameAndTeamAwayNameAndDate(String teamHomeName, String teamAwayName, Date date);
+
+    //Return all matches in descending order
+    List<MatchEntity> findByOrderByIdDesc();
 }

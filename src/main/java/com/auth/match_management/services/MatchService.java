@@ -21,6 +21,21 @@ public class MatchService {
     }
 
     public MatchEntity createMatch(MatchEntity matchEntity) throws Exception {
+        //Null object check
+        if(matchEntity.isNull()){
+            throw new Exception("Match is null");
+        }
+
+        Integer goals_h = matchEntity.getTeamHomeGoals();
+        Integer goals_a = matchEntity.getTeamAwayGoals();
+
+        if (goals_h == null || goals_a == null) {
+            throw new IllegalArgumentException("Goals cannot be null");
+        }else if(goals_h<0 || goals_a<0){
+            throw new IllegalArgumentException("Goals cannot be negative");
+        }
+
+
         Date date = Date.valueOf(LocalDate.now());
         String home = matchEntity.getTeamHomeName();
         String away = matchEntity.getTeamAwayName();
@@ -46,7 +61,7 @@ public class MatchService {
     }
 
     public List<MatchEntity> getAllMatches() {
-        return matchRepository.findAll();
+        return matchRepository.findByOrderByIdDesc();
     }
 
     public MatchEntity getMatchById(Long id) {

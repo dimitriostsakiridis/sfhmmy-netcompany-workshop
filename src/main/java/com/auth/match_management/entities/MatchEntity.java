@@ -79,4 +79,8 @@ public class MatchEntity {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public boolean isNull(){
+        return (teamHomeName==null||teamAwayName==null);
+    }
 }
